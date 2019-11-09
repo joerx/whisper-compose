@@ -18,12 +18,14 @@ services:
     environment:
       SERVER_PORT: "9090"
       WHISPER_BACKEND_URL: http://backend:9091/
+    depends_on:
+      - backend
     networks:
       - whisper
 
   backend:
     image: quay.io/yodo-io/whisper-backend:latest
-    ports: 
+    ports:
       - "9091:9091"
     environment:
       SERVER_PORT: "9091"
