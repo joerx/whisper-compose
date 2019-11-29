@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+
+  postgres.it:
+    image: postgres:9.4
+    environment:
+      POSTGRES_DB: whisper
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - whisper
+
+  backend:
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://postgres.it:5432/whisper
+      DATASOURCE_USERNAME: postgres
+      DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres.it

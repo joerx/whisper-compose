@@ -14,10 +14,16 @@ Docker compose stack for whisper development
 
 ## Usage
 
-### Entire Stack
+### Default Environment
 
 ```sh
 docker-compose up -d
+```
+
+### Environment for Integration Tests
+
+```sh
+docker-compose -f docker-compose.yml -f docker-compose.it.yml up -d
 ```
 
 ### Logs
