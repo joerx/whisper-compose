@@ -24,8 +24,6 @@ services:
       SERVER_PORT: "9090"
       WHISPER_BACKEND_URL: http://backend:9091/
       WHISPER_AUTH_URL: http://auth:9092/
-      WHISPER_JWT_ISSUER: io.yodo/whisper
-      WHISPER_JWT_SECRET: eiPiequeeveixairae2u
     depends_on:
       - backend
     networks:
@@ -37,11 +35,9 @@ services:
       - "9091:9091"
     environment:
       SERVER_PORT: "9091"
-      DATASOURCE_URL: jdbc:postgresql://postgres:5432/whisper
-      DATASOURCE_USERNAME: postgres
-      DATASOURCE_PASSWORD: postgres
-      WHISPER_JWT_ISSUER: io.yodo/whisper
-      WHISPER_JWT_SECRET: eiPiequeeveixairae2u
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/whisper_backend
+      DATASOURCE_USERNAME: whisper_backend
+      DATASOURCE_PASSWORD: whisper
     depends_on:
       - postgres # only affects startup order, no guarantee postgres is ready
     networks:
@@ -53,11 +49,9 @@ services:
       - "9092:9092"
     environment:
       SERVER_PORT: "9092"
-      DATASOURCE_URL: jdbc:postgresql://postgres:5432/whisper-auth
-      DATASOURCE_USERNAME: postgres
-      DATASOURCE_PASSWORD: postgres
-      WHISPER_JWT_ISSUER: io.yodo/whisper
-      WHISPER_JWT_SECRET: eiPiequeeveixairae2u
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/whisper_auth
+      DATASOURCE_USERNAME: whisper_auth
+      DATASOURCE_PASSWORD: whisper
     depends_on:
       - postgres # only affects startup order, no guarantee postgres is ready
     networks:
@@ -66,13 +60,14 @@ services:
   postgres:
     image: postgres:9.4
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - "./postgres/initdb.d:/docker-entrypoint-initdb.d"
+      - "db-data:/var/lib/postgresql/data"
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: whisper
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      WHISPER_DB_PASSWORD: whisper
     networks:
       - whisper
 
