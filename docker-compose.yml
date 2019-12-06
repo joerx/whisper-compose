@@ -24,6 +24,8 @@ services:
       SERVER_PORT: "9090"
       WHISPER_BACKEND_URL: http://backend:9091/
       WHISPER_AUTH_URL: http://auth:9092/
+      SPRING_PROFILES_ACTIVE: dev
+      WHISPER_JWT_ISSUER: whisper-dev.yodo.io/whisper-auth
     depends_on:
       - backend
     networks:
@@ -38,6 +40,8 @@ services:
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/whisper_backend
       DATASOURCE_USERNAME: whisper_backend
       DATASOURCE_PASSWORD: whisper
+      SPRING_PROFILES_ACTIVE: dev
+      WHISPER_JWT_ISSUER: whisper-dev.yodo.io/whisper-auth
     depends_on:
       - postgres # only affects startup order, no guarantee postgres is ready
     networks:
@@ -52,6 +56,8 @@ services:
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/whisper_auth
       DATASOURCE_USERNAME: whisper_auth
       DATASOURCE_PASSWORD: whisper
+      SPRING_PROFILES_ACTIVE: dev
+      WHISPER_JWT_ISSUER: whisper-dev.yodo.io/whisper-auth
     depends_on:
       - postgres # only affects startup order, no guarantee postgres is ready
     networks:
